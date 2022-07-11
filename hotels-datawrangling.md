@@ -105,10 +105,31 @@ want to try out.
 ``` r
 hotels %>%
   filter(
-    country ____ "USA", 
-    lead_time ____ ____
+    country != "USA",
+    lead_time < 1
     )
 ```
+
+    ## # A tibble: 6,174 × 32
+    ##    hotel        is_canceled lead_time arrival_date_year arrival_date_month
+    ##    <chr>              <dbl>     <dbl>             <dbl> <chr>             
+    ##  1 Resort Hotel           0         0              2015 July              
+    ##  2 Resort Hotel           0         0              2015 July              
+    ##  3 Resort Hotel           0         0              2015 July              
+    ##  4 Resort Hotel           0         0              2015 July              
+    ##  5 Resort Hotel           0         0              2015 July              
+    ##  6 Resort Hotel           0         0              2015 July              
+    ##  7 Resort Hotel           0         0              2015 July              
+    ##  8 Resort Hotel           0         0              2015 July              
+    ##  9 Resort Hotel           0         0              2015 July              
+    ## 10 Resort Hotel           0         0              2015 July              
+    ## # … with 6,164 more rows, and 27 more variables:
+    ## #   arrival_date_week_number <dbl>, arrival_date_day_of_month <dbl>,
+    ## #   stays_in_weekend_nights <dbl>, stays_in_week_nights <dbl>, adults <dbl>,
+    ## #   children <dbl>, babies <dbl>, meal <chr>, country <chr>,
+    ## #   market_segment <chr>, distribution_channel <chr>, is_repeated_guest <dbl>,
+    ## #   previous_cancellations <dbl>, previous_bookings_not_canceled <dbl>,
+    ## #   reserved_room_type <chr>, assigned_room_type <chr>, …
 
 ### Exercise 3.
 
@@ -126,7 +147,7 @@ want to try out.
 ``` r
 hotels %>%
   filter(
-    children [AT LEAST] 1 [OR] babies [AT LEAST] 1
+    children >= 1 | babies >= 1
     )
 ```
 
@@ -139,14 +160,18 @@ child **or** baby in the room? Then, do the same for city hotels, and
 compare the numbers of rows in the resulting filtered data frames.
 
 ``` r
-# add code here
-# pay attention to correctness and code style
+hotels %>%
+  filter(hotel == "Resort Hotel", children >= 1 | babies >= 1) %>% nrow()
 ```
 
+    ## [1] 3929
+
 ``` r
-# add code here
-# pay attention to correctness and code style
+hotels %>%
+  filter(hotel == "City Hotel", children >= 1 | babies >= 1) %>% nrow()
 ```
+
+    ## [1] 5403
 
 ### Exercise 5.
 
@@ -161,9 +186,27 @@ include spaces. It also shouldn’t repeat a previous label, otherwise R
 Markdown will give you an error about repeated R chunk labels.
 
 ``` r
-# add code here
-# pay attention to correctness and code style
+hotels %>%
+  count(adults, sort = TRUE)
 ```
+
+    ## # A tibble: 14 × 2
+    ##    adults     n
+    ##     <dbl> <int>
+    ##  1      2 89680
+    ##  2      1 23027
+    ##  3      3  6202
+    ##  4      0   403
+    ##  5      4    62
+    ##  6     26     5
+    ##  7      5     2
+    ##  8     20     2
+    ##  9     27     2
+    ## 10      6     1
+    ## 11     10     1
+    ## 12     40     1
+    ## 13     50     1
+    ## 14     55     1
 
 ### Exercise 6.
 
@@ -176,9 +219,43 @@ exercise?
 `label-me-2`).
 
 ``` r
-# add code here
-# pay attention to correctness and code style
+hotels %>%
+  filter(is_canceled == 1) %>%
+  count(adults, sort = TRUE)
 ```
+
+    ## # A tibble: 14 × 2
+    ##    adults     n
+    ##     <dbl> <int>
+    ##  1      2 35258
+    ##  2      1  6674
+    ##  3      3  2151
+    ##  4      0   109
+    ##  5      4    16
+    ##  6     26     5
+    ##  7      5     2
+    ##  8     20     2
+    ##  9     27     2
+    ## 10      6     1
+    ## 11     10     1
+    ## 12     40     1
+    ## 13     50     1
+    ## 14     55     1
+
+``` r
+hotels %>%
+  filter(is_canceled == 0) %>%
+  count(adults, sort = TRUE)
+```
+
+    ## # A tibble: 5 × 2
+    ##   adults     n
+    ##    <dbl> <int>
+    ## 1      2 54422
+    ## 2      1 16353
+    ## 3      3  4051
+    ## 4      0   294
+    ## 5      4    46
 
 ### Exercise 7.
 
